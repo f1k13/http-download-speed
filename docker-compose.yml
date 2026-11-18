@@ -1,0 +1,7 @@
+services:
+  speedtest:
+    build: .
+    image: speedtest
+    # URL можно передать аргументом: docker compose run --rm speedtest <url>
+    # или переменной окружения:      URL=<url> docker compose run --rm speedtest
+    command: ["${URL:-https://proof.ovh.net/files/10Mb.dat}"]
