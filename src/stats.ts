@@ -39,9 +39,11 @@ const BYTE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB'] as const;
 
 /** Десятичные единицы: 1 KB = 1000 B. */
 export function formatBytes(bytes: number): string {
+  const last = BYTE_UNITS.length - 1;
   let value = bytes;
   let i = 0;
-  while (value >= 1000 && i < BYTE_UNITS.length - 1) {
+  // Сравниваем уже округлённое значение, чтобы 999 999 B стало «1.00 MB», а не «1000.00 KB».
+  while (i < last && Number(value.toFixed(i === 0 ? 0 : 2)) >= 1000) {
     value /= 1000;
     i++;
   }
